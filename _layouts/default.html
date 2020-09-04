@@ -49,10 +49,19 @@
         });
 
         $('#selectVersion').on('change', (e) => {
-          let currentUrl = window.location.href;
-          let mainSegment = currentUrl.split('/')[3];
+          /* specify all versions */
+          let versions = [
+            'latest', '1.2.x', '1.1.x'
+          ];
 
-          window.location.href = currentUrl.replace(mainSegment, $(e.currentTarget).val());
+          /* replacing version and redirecting */
+          let newUrl = window.location.href;
+          versions.forEach(v => {
+            if (window.location.href.search(v) !== -1) {
+              newUrl = window.location.href.replace(v, $(e.currentTarget).val());
+            }
+          });
+          window.location.href = newUrl;
         });
       });
     </script>
