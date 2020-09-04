@@ -30,6 +30,13 @@
           </div>
 
           <div class="right-content">
+            <div>
+              <select name="version" id="selectVersion" style="float: right;">
+                <option value="latest">Master</option>
+                <option value="1.2.x">1.2.x</option>
+                <option value="1.1.x">1.1.x</option>
+              </select>
+            </div>
             {{ content }}
           </div>
         </div>
@@ -39,6 +46,13 @@
       $(document).ready(function() {
         $(".hamburger").click(function() {
           $(".side-menu").toggleClass("active");
+        });
+
+        $('#selectVersion').on('change', (e) => {
+          let currentUrl = window.location.href;
+          let mainSegment = currentUrl.split('/')[3];
+
+          window.location.href = currentUrl.replace(mainSegment, $(e.currentTarget).val());
         });
       });
     </script>
