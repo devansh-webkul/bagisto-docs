@@ -1,69 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="keywords"
-      content="bagisto documentation, bagisto API, laravel ecommerce"
-    />
-    <meta
-      name="viewport"
-      content="width=device-width,user-scalable=yes,initial-scale=1,maximum-scale=5"
-    />
-    <meta
-      name="description"
-      content="Easily extend functionality, build extensions and mobile applications on top of the bagisto framework using the bagisto development and API documentation"
-    />
-    <title>{{ page.title }}</title>
-    <link rel="stylesheet" href="assets/scss/layout.css" />
-    <link rel="stylesheet" href="assets/css/syntax.css" />
-    <link rel="icon" sizes="16x16" href="assets/images/icons/favicon.ico" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-  </head>
-  <body>
-    <div class="container">
-      <div class="content-wrapper">
-        <div class="content">
-          <div class="side-menu">
-            <div id="sidebar-icon" class="hamburger"></div>
-            {% include sidebar.html %}
-          </div>
 
-          <div class="right-content">
-            <div>
-              <select name="version" id="selectVersion" style="float: right;">
-                <option value="latest">Master</option>
-                <option value="1.2.x">1.2.x</option>
-                <option value="1.1.x">1.1.x</option>
-              </select>
-            </div>
-            {{ content }}
+<head>
+  <meta charset="utf-8" />
+  <meta name="keywords" content="bagisto documentation, bagisto API, laravel ecommerce" />
+  <meta name="viewport" content="width=device-width,user-scalable=yes,initial-scale=1,maximum-scale=5" />
+  <meta name="description" content="Easily extend functionality, build extensions and mobile applications on top of the bagisto framework using the bagisto development and API documentation" />
+  <title>{{ page.title }}</title>
+  <link rel="stylesheet" href="assets/scss/layout.css" />
+  <link rel="stylesheet" href="assets/css/syntax.css" />
+  <link rel="icon" sizes="16x16" href="assets/images/icons/favicon.ico" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="side-menu">
+          <div id="sidebar-icon" class="hamburger"></div>
+          {% include sidebar.html %}
+        </div>
+        <div class="right-content">
+          <div>
+            <select name="version" id="selectVersion" style="float: right;">
+              <option value="latest">Master</option>
+              <option value="1.2.x">1.2.x</option>
+              <option value="1.1.x">1.1.x</option>
+            </select>
           </div>
+          {{ content }}
         </div>
       </div>
     </div>
-    <script>
-      $(document).ready(function() {
-        $(".hamburger").click(function() {
-          $(".side-menu").toggleClass("active");
-        });
+  </div>
+  <script>
+    $(document).ready(function () {
+      /* specify all versions */
+      let versions = [
+        'latest', '1.2.x', '1.1.x'
+      ];
 
-        $('#selectVersion').on('change', (e) => {
-          /* specify all versions */
-          let versions = [
-            'latest', '1.2.x', '1.1.x'
-          ];
-
-          /* replacing version and redirecting */
-          let newUrl = window.location.href;
-          versions.forEach(v => {
-            if (window.location.href.search(v) !== -1) {
-              newUrl = window.location.href.replace(v, $(e.currentTarget).val());
-            }
-          });
-          window.location.href = newUrl;
-        });
+      /* selecting current version */
+      versions.forEach(v => {
+        if (window.location.href.search(v) !== -1) {
+          $('#selectVersion').val(v).trigger('change');
+        }
       });
-    </script>
-  </body>
+
+      /* replacing version and redirecting */
+      $('#selectVersion').on('change', (e) => {
+        let newUrl = window.location.href;
+        versions.forEach(v => {
+          if (window.location.href.search(v) !== -1) {
+            newUrl = window.location.href.replace(v, $(e.currentTarget).val());
+          }
+        });
+        window.location.href = newUrl;
+      });
+
+      /* toggle class */
+      $(".hamburger").on('click', () => {
+        $('.side-menu').toggleClass('active');
+      });
+    });
+  </script>
+</body>
+
 </html>
